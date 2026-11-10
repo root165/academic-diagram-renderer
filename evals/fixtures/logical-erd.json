@@ -1,0 +1,25 @@
+{
+  "title": "客户订单逻辑模型",
+  "purpose": "校验双向参与约束",
+  "diagram_type": "erd",
+  "semantic_level": "logical_relational",
+  "notation": "crow_foot_ie",
+  "source_requirements": ["T-01"],
+  "assumptions": [],
+  "tbd": [],
+  "entities": [
+    {"id": "customer", "name": "Customer", "source_requirement": "T-01"},
+    {"id": "order", "name": "Order", "source_requirement": "T-01"}
+  ],
+  "relationships": [
+    {
+      "id": "places",
+      "name": "places",
+      "left_entity": "customer",
+      "right_entity": "order",
+      "left_to_right": {"min": 0, "max": "N", "meaning": "一个客户可创建零到多张订单"},
+      "right_to_left": {"min": 1, "max": 1, "meaning": "每张订单必须且仅属于一个客户"},
+      "source_requirement": "T-01"
+    }
+  ]
+}

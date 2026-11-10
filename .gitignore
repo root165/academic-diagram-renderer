@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+*.skill
+dist/
+*-workspace/
+*.validation.json
+inspection-negative.json

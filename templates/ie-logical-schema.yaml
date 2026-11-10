@@ -1,0 +1,29 @@
+title: 客户订单逻辑关系模型
+purpose: 表达客户和订单的逻辑关系及可选性
+diagram_type: erd
+semantic_level: logical_relational
+notation: crow_foot_ie
+source_requirements: [R-03]
+renderer: PlantUML
+assumptions: []
+tbd: []
+entities:
+  - id: customer
+    name: Customer
+    attributes:
+      - {name: customer_id, key: PK}
+    source_requirement: R-03
+  - id: order
+    name: Order
+    attributes:
+      - {name: order_id, key: PK}
+      - {name: customer_id, key: FK}
+    source_requirement: R-03
+relationships:
+  - id: places
+    name: places
+    left_entity: customer
+    right_entity: order
+    left_to_right: {min: 0, max: N, meaning: 一个客户可创建零到多张订单}
+    right_to_left: {min: 1, max: 1, meaning: 每张订单必须且仅属于一个客户}
+    source_requirement: R-03

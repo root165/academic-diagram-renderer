@@ -1,0 +1,16 @@
+title: 订单处理上下文数据流图
+purpose: 表达外部实体、订单处理和数据存储之间的数据流
+diagram_type: dfd
+semantic_level: context
+notation: gane_sarson
+source_requirements: [R-20]
+assumptions: []
+tbd: []
+nodes:
+  - {id: customer, type: external_entity, label: 客户, source_requirement: R-20}
+  - {id: order_service, type: process, label: 处理订单, source_requirement: R-20}
+  - {id: order_store, type: data_store, label: 订单库, source_requirement: R-20}
+data_flows:
+  - {from: customer, to: order_service, label: 订单请求, source_requirement: R-20}
+  - {from: order_service, to: order_store, label: 订单记录, source_requirement: R-20}
+  - {from: order_service, to: customer, label: 订单确认, source_requirement: R-20}
