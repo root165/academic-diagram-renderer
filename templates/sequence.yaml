@@ -3,6 +3,12 @@ purpose: 表达客户端、订单服务和支付服务之间的交互
 diagram_type: sequence
 semantic_level: interaction
 notation: uml_2_5_1
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
 source_requirements: [R-31]
 assumptions: []
 tbd: [支付失败时的补偿流程未指定]

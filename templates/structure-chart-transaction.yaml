@@ -1,0 +1,33 @@
+title: 航班信息查询系统事务型结构图
+section: 系统结构设计
+purpose: 表达事务中心按查询类型分派到日期、班次、线路查询模块的结构图
+diagram_type: structure_chart
+semantic_level: module_design
+notation: structure_chart
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [SD-02]
+assumptions:
+  - 采用事务分析；查询类型为日期、班次、线路三类。
+  - 仅当存在事务中心/按类型分派时使用本模板；默认结构图请用变换型模板。
+  - 数据偶/控制偶在源码中用独立细箭头表示，不复用调用箭头标签。
+tbd: []
+nodes:
+  - {id: main, type: module, label: 航班信息查询主控模块, source_requirement: SD-02}
+  - {id: receive, type: module, label: 接受查询信息, source_requirement: SD-02}
+  - {id: analyse, type: module, label: 分析查询类型, source_requirement: SD-02}
+  - {id: send, type: module, label: 发送查询清单, source_requirement: SD-02}
+  - {id: by_date, type: module, label: 按日期查询, source_requirement: SD-02}
+  - {id: by_shift, type: module, label: 按班次查询, source_requirement: SD-02}
+  - {id: by_route, type: module, label: 按线路查询, source_requirement: SD-02}
+edges:
+  - {from: main, to: receive, data: [查询信息], label: "D: 查询信息"}
+  - {from: main, to: analyse, data: [查询请求], label: "D: 查询请求"}
+  - {from: main, to: send, data: [查询结果], label: "D: 查询结果"}
+  - {from: analyse, to: by_date, data: [日期查询清单], label: "D: 日期查询清单"}
+  - {from: analyse, to: by_shift, data: [班次查询清单], label: "D: 班次查询清单"}
+  - {from: analyse, to: by_route, data: [线路查询清单], label: "D: 线路查询清单"}

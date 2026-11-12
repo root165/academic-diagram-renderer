@@ -1,15 +1,39 @@
 {
   "title": "客户订单逻辑模型",
-  "purpose": "校验双向参与约束",
+  "section": "数据库表设计",
+  "purpose": "校验双向参与约束、主外键与多对多拆分",
   "diagram_type": "erd",
   "semantic_level": "logical_relational",
   "notation": "crow_foot_ie",
+  "visual_style": {
+    "palette": "monochrome",
+    "background": "#FFFFFF",
+    "foreground": "#111111",
+    "fills": ["#FFFFFF", "#F2F2F2"],
+    "color_usage": "none"
+  },
   "source_requirements": ["T-01"],
   "assumptions": [],
   "tbd": [],
   "entities": [
-    {"id": "customer", "name": "Customer", "source_requirement": "T-01"},
-    {"id": "order", "name": "Order", "source_requirement": "T-01"}
+    {
+      "id": "customer",
+      "name": "Customer",
+      "source_requirement": "T-01",
+      "attributes": [
+        {"name": "customer_id", "key": "PK", "type": "bigint"},
+        {"name": "customer_name", "type": "varchar(50)"}
+      ]
+    },
+    {
+      "id": "order",
+      "name": "Order",
+      "source_requirement": "T-01",
+      "attributes": [
+        {"name": "order_id", "key": "PK", "type": "bigint"},
+        {"name": "customer_id", "key": "FK", "type": "bigint", "references": {"entity": "customer", "attribute": "customer_id"}}
+      ]
+    }
   ],
   "relationships": [
     {

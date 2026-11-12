@@ -3,6 +3,12 @@ purpose: 表达外部实体、订单处理和数据存储之间的数据流
 diagram_type: dfd
 semantic_level: context
 notation: gane_sarson
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
 source_requirements: [R-20]
 assumptions: []
 tbd: []

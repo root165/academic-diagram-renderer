@@ -1,4 +1,4 @@
 interface:
   display_name: Academic Diagram Renderer
-  short_description: Render validated academic diagrams and tables
-  default_prompt: Create a traceable, validated diagram or academic table from these report requirements.
+  short_description: Validate and render monochrome academic diagrams across structural, architectural, and process views
+  default_prompt: Create a traceable, validated, monochrome diagram or academic table, placed in the correct report section and matched to its authoritative view definition.

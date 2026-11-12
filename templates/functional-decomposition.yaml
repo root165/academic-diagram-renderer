@@ -1,0 +1,36 @@
+title: 维检云枢系统功能结构图
+section: 系统功能结构设计
+purpose: 表达平台—一级模块—二级功能的组成关系，不表示模块调用或数据传递
+diagram_type: functional_decomposition
+semantic_level: functional
+notation: functional_decomposition
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [FR-01]
+assumptions:
+  - 只画功能组成；模块调用关系见图 3-2 或结构图。
+  - 默认自上而下纵向布局（根在上、子功能向下），功能框为竖向矩形（高≥宽），不采用横向长条或横向树。
+tbd: []
+nodes:
+  - {id: platform, type: function, label: 维检云枢, source_requirement: FR-01}
+  - {id: m01, type: function, label: 系统与基础数据, source_requirement: FR-01}
+  - {id: m02, type: function, label: 设备档案台账, source_requirement: FR-01}
+  - {id: m03, type: function, label: 巡检计划与任务, source_requirement: FR-01}
+  - {id: m04, type: function, label: 故障报修与维修, source_requirement: FR-01}
+  - {id: m05, type: function, label: 维保管理与归档, source_requirement: FR-01}
+  - {id: m06, type: function, label: 备件管理, source_requirement: FR-01}
+  - {id: m07, type: function, label: 统计分析与决策看板, source_requirement: FR-01}
+  - {id: m08, type: function, label: 移动端协同, source_requirement: FR-01}
+edges:
+  - {from: platform, to: m01}
+  - {from: platform, to: m02}
+  - {from: platform, to: m03}
+  - {from: platform, to: m04}
+  - {from: platform, to: m05}
+  - {from: platform, to: m06}
+  - {from: platform, to: m07}
+  - {from: platform, to: m08}

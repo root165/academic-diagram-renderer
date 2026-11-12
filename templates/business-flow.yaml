@@ -1,0 +1,40 @@
+title: 设备报修跨职能业务流程
+section: 业务流程设计
+purpose: 表达巡检员、设备管理员、维修工之间的报修受理、派单、维修与验收交接
+diagram_type: business_flow
+semantic_level: business_process
+flow_variant: cross_functional
+notation: bpmn_2_0_2
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [BP-01]
+assumptions:
+  - 只画主路径与验收不通过退回；备件领用作为维修活动的子流程，不在本图展开。
+tbd: []
+lanes:
+  - {id: inspector, label: 巡检员}
+  - {id: admin, label: 设备管理员}
+  - {id: repairman, label: 维修工}
+nodes:
+  - {id: start, type: start, label: 发现异常, lane: inspector, source_requirement: BP-01}
+  - {id: submit, type: activity, label: 提交报修单, lane: inspector, source_requirement: BP-01}
+  - {id: accept, type: decision, label: 是否受理, lane: admin, source_requirement: BP-01}
+  - {id: dispatch, type: activity, label: 派发维修工单, lane: admin, source_requirement: BP-01}
+  - {id: repair, type: activity, label: 接单并维修, lane: repairman, source_requirement: BP-01}
+  - {id: accept_check, type: decision, label: 验收是否通过, lane: admin, source_requirement: BP-01}
+  - {id: close, type: activity, label: 关闭工单, lane: admin, source_requirement: BP-01}
+  - {id: end, type: end, label: 结束, lane: admin, source_requirement: BP-01}
+edges:
+  - {from: start, to: submit, label: 发起}
+  - {from: submit, to: accept, label: 报修单}
+  - {from: accept, to: dispatch, label: 受理}
+  - {from: accept, to: end, label: 驳回}
+  - {from: dispatch, to: repair, label: 派工单}
+  - {from: repair, to: accept_check, label: 完工提交}
+  - {from: accept_check, to: close, label: 通过}
+  - {from: accept_check, to: repair, label: 退回维修}
+  - {from: close, to: end, label: 归档}

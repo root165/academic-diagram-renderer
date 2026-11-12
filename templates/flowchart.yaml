@@ -3,6 +3,12 @@ purpose: 表达订单提交的程序控制流
 diagram_type: flowchart
 semantic_level: algorithm
 notation: iso_5807
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
 source_requirements: [R-11]
 assumptions: []
 tbd: []

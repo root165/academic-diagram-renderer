@@ -5,11 +5,14 @@
 | Need | Preferred renderer |
 | --- | --- |
 | UML or IE/Crow's Foot ERD | PlantUML |
-| Hierarchy, orthogonal tree, special layout | Graphviz |
+| Chen ERD with a hand-tuned layout | Graphviz `neato -n2` |
+| Hierarchy, orthogonal tree, special layout | Graphviz `dot` |
 | Simple supported flow/sequence | Mermaid CLI |
 | BPMN stencil or editable manual layout | Draw.io desktop CLI |
 
 PlantUML and Graphviz should render SVG/PDF whenever practical. Mermaid and Draw.io outputs must also be tested; their available CLI options can vary by installation.
+
+For a Chen ERD, `scripts/render.py` accepts `--engine neato --fixed`; this invokes `dot -Kneato -n2`, which honours `pos="x,y!"` coordinates. Use fixed coordinates when the automatic layout would turn a business chain into a tall, unreadable strip. For ordinary Graphviz diagrams, keep the default `dot` engine.
 
 ## Discovery first
 

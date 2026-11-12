@@ -1,0 +1,30 @@
+title: 维检云枢部署架构图
+section: 部署设计
+purpose: 表达 Web、应用、数据库、缓存、对象存储与外部系统之间的运行时节点和通信路径
+diagram_type: deployment
+semantic_level: deployment
+viewpoint: deployment
+notation: uml_2_5_1_deployment
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [AR-02]
+assumptions:
+  - 课程演示环境可单机部署；生产环境建议应用双实例。
+tbd: []
+nodes:
+  - {id: client, type: device, label: Web/移动端, source_requirement: AR-02}
+  - {id: nginx, type: node, label: Nginx, source_requirement: AR-02}
+  - {id: app, type: execution_environment, label: Spring Boot JVM, source_requirement: AR-02}
+  - {id: mysql, type: database, label: MySQL 8.0, source_requirement: AR-02}
+  - {id: redis, type: cache, label: Redis 7, source_requirement: AR-02}
+  - {id: minio, type: node, label: MinIO, source_requirement: AR-02}
+edges:
+  - {from: client, to: nginx, protocol: HTTPS, port: 443, label: HTTPS/443}
+  - {from: nginx, to: app, protocol: HTTP, port: 8080, label: HTTP/8080}
+  - {from: app, to: mysql, protocol: MySQL, port: 3306, label: MySQL/3306}
+  - {from: app, to: redis, protocol: RESP, port: 6379, label: Redis/6379}
+  - {from: app, to: minio, protocol: S3, port: 9000, label: S3/9000}

@@ -1,0 +1,38 @@
+title: 巡检任务生成变换型结构图
+section: 系统结构设计
+purpose: 用输入—中心变换—输出三支表达巡检任务生成主控模块、输入校验、任务生成和输出处理
+diagram_type: structure_chart
+semantic_level: module_design
+notation: structure_chart
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [SD-01]
+assumptions:
+  - 默认采用变换分析：输入支（准备生成数据）、中心变换（生成任务与明细）、输出支（匹配执行人/写日志）。
+  - 只表达模块调用和数据/控制偶，不表达时间顺序。
+  - 数据偶/控制偶在源码中用独立细箭头表示，不复用调用箭头标签。
+tbd: []
+nodes:
+  - {id: main, type: module, label: 巡检任务生成主控, source_requirement: SD-01}
+  - {id: input, type: module, label: 准备生成数据, source_requirement: SD-01}
+  - {id: read, type: module, label: 读取有效计划, source_requirement: SD-01}
+  - {id: validate, type: module, label: 校验计划周期, source_requirement: SD-01}
+  - {id: times, type: module, label: 计算执行时点, source_requirement: SD-01}
+  - {id: generate, type: module, label: 生成任务与明细, source_requirement: SD-01}
+  - {id: output, type: module, label: 完成任务生成, source_requirement: SD-01}
+  - {id: assign, type: module, label: 匹配执行人, source_requirement: SD-01}
+  - {id: log, type: module, label: 写日志并推送待办, source_requirement: SD-01}
+edges:
+  - {from: main, to: input, data: [扫描周期], label: "D: 扫描周期"}
+  - {from: main, to: generate, data: [有效计划列表, 时点表], control: [是否到执行时点], label: "D: 计划/时点 / C: 到点判断"}
+  - {from: main, to: output, data: [任务快照], label: "D: 任务快照"}
+  - {from: input, to: read, data: [计划表], label: "D: 计划表"}
+  - {from: input, to: validate, data: [计划周期], label: "D: 周期规则"}
+  - {from: input, to: times, data: [开始/结束日期], label: "D: 日期范围"}
+  - {from: generate, to: output, data: [任务快照], label: "D: 任务快照"}
+  - {from: output, to: assign, data: [派发方式, 设备责任人], label: "D: 派发方式/责任人"}
+  - {from: output, to: log, data: [生成数量, 耗时], label: "D: 生成结果"}

@@ -1,24 +1,54 @@
-title: 客户订单逻辑关系模型
-purpose: 表达客户和订单的逻辑关系及可选性
+title: 客户订单逻辑表关系图
+section: 数据库表设计
+purpose: 表达客户、订单、商品及订单明细表的逻辑主外键关系
 diagram_type: erd
 semantic_level: logical_relational
 notation: crow_foot_ie
-source_requirements: [R-03]
 renderer: PlantUML
-assumptions: []
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [R-03]
+assumptions:
+  - 逻辑外键按业务关系绘制；若项目物理层不建外键约束，在图注中说明完整性由 Service 层保证。
 tbd: []
 entities:
   - id: customer
     name: Customer
-    attributes:
-      - {name: customer_id, key: PK}
+    logical_name: customer
     source_requirement: R-03
+    attributes:
+      - {name: customer_id, key: PK, type: bigint}
+      - {name: customer_name, type: varchar(50)}
   - id: order
     name: Order
-    attributes:
-      - {name: order_id, key: PK}
-      - {name: customer_id, key: FK}
+    logical_name: orders
     source_requirement: R-03
+    attributes:
+      - {name: order_id, key: PK, type: bigint}
+      - {name: customer_id, key: FK, type: bigint, references: {entity: customer, attribute: customer_id}}
+      - {name: order_date, type: datetime}
+  - id: product
+    name: Product
+    logical_name: product
+    source_requirement: R-03
+    attributes:
+      - {name: product_id, key: PK, type: bigint}
+      - {name: product_name, type: varchar(80)}
+      - {name: unit_price, type: decimal(10,2)}
+  - id: order_item
+    name: OrderItem
+    logical_name: order_item
+    source_requirement: R-03
+    attributes:
+      - {name: order_item_id, key: PK, type: bigint}
+      - {name: order_id, key: FK, type: bigint, references: {entity: order, attribute: order_id}}
+      - {name: product_id, key: FK, type: bigint, references: {entity: product, attribute: product_id}}
+      - {name: quantity, type: int}
+      - {name: unit_price, type: decimal(10,2)}
 relationships:
   - id: places
     name: places
@@ -26,4 +56,18 @@ relationships:
     right_entity: order
     left_to_right: {min: 0, max: N, meaning: 一个客户可创建零到多张订单}
     right_to_left: {min: 1, max: 1, meaning: 每张订单必须且仅属于一个客户}
+    source_requirement: R-03
+  - id: contains
+    name: contains
+    left_entity: order
+    right_entity: order_item
+    left_to_right: {min: 1, max: N, meaning: 一张订单至少包含一条明细}
+    right_to_left: {min: 1, max: 1, meaning: 每条明细必须且仅属于一张订单}
+    source_requirement: R-03
+  - id: refers
+    name: refers
+    left_entity: product
+    right_entity: order_item
+    left_to_right: {min: 0, max: N, meaning: 一个商品可出现在零到多条明细中}
+    right_to_left: {min: 1, max: 1, meaning: 每条明细必须且仅对应一个商品}
     source_requirement: R-03

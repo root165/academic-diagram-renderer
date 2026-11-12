@@ -3,6 +3,12 @@ purpose: 跟踪需求、实现和验证的对应关系
 diagram_type: table
 semantic_level: report
 notation: three_line_academic
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
 source_requirements: [R-01]
 assumptions: []
 tbd: []

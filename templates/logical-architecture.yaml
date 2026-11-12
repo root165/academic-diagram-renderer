@@ -1,0 +1,29 @@
+title: 维检云枢逻辑架构图
+section: 系统逻辑架构设计
+purpose: 表达用户、接入、业务、支撑、数据五层的职责与允许的依赖方向
+diagram_type: logical_architecture
+semantic_level: architecture
+viewpoint: logical
+notation: layered_architecture
+visual_style:
+  palette: monochrome
+  background: "#FFFFFF"
+  foreground: "#111111"
+  fills: ["#FFFFFF", "#F2F2F2"]
+  color_usage: none
+source_requirements: [AR-01]
+assumptions:
+  - 本图不表示服务器、IP、端口或容器编排；这些属于部署视图。
+tbd: []
+nodes:
+  - {id: user, type: layer, label: 用户层, responsibility: Web 管理端与移动端, source_requirement: AR-01}
+  - {id: access, type: layer, label: 接入层, responsibility: Nginx、JWT、RESTful API、WebSocket, source_requirement: AR-01}
+  - {id: business, type: layer, label: 业务层, responsibility: 设备、巡检、报修维修、维保、备件、统计, source_requirement: AR-01}
+  - {id: support, type: layer, label: 支撑层, responsibility: 调度、离线同步、文件、消息、统计聚合, source_requirement: AR-01}
+  - {id: data, type: layer, label: 数据层, responsibility: MySQL、Redis、MinIO, source_requirement: AR-01}
+edges:
+  - {from: user, to: access, label: HTTPS/JSON}
+  - {from: access, to: business, label: RESTful API}
+  - {from: business, to: support, label: Service 接口}
+  - {from: business, to: data, label: Mapper/Repository}
+  - {from: support, to: data, label: 读写/缓存/对象存储}

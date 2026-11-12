@@ -2,21 +2,101 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Academic Diagram IR",
   "type": "object",
-  "required": ["title", "purpose", "diagram_type", "semantic_level", "notation", "source_requirements"],
+  "required": ["title", "purpose", "diagram_type", "semantic_level", "notation", "visual_style", "source_requirements"],
   "properties": {
     "title": {"type": "string", "minLength": 1},
     "purpose": {"type": "string", "minLength": 1},
-    "diagram_type": {"enum": ["erd", "flowchart", "dfd", "bpmn", "use_case", "sequence", "activity", "state_machine", "structure_chart", "functional_decomposition", "component", "deployment", "table"]},
+    "section": {"type": "string", "minLength": 1},
+    "diagram_type": {"enum": ["erd", "flowchart", "dfd", "bpmn", "use_case", "sequence", "activity", "state_machine", "structure_chart", "functional_decomposition", "logical_architecture", "business_flow", "component", "deployment", "table"]},
     "semantic_level": {"type": "string", "minLength": 1},
     "notation": {"type": "string", "minLength": 1},
+    "flow_variant": {"enum": ["basic", "cross_functional"]},
+    "viewpoint": {"enum": ["logical", "deployment"]},
+    "visual_style": {"$ref": "#/$defs/visualStyle"},
     "source_requirements": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
     "assumptions": {"type": "array", "items": {"type": "string"}},
     "tbd": {"type": "array", "items": {"type": "string"}},
     "renderer": {"type": "string"},
-    "entities": {"type": "array"},
-    "relationships": {"type": "array"},
+    "entities": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}},
     "nodes": {"type": "array"},
     "edges": {"type": "array"},
+    "lanes": {"type": "array"},
     "data_flows": {"type": "array"}
+  },
+  "$defs": {
+    "visualStyle": {
+      "type": "object",
+      "required": ["palette", "background", "foreground"],
+      "properties": {
+        "palette": {"enum": ["monochrome", "template"]},
+        "background": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "foreground": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "fills": {"type": "array", "items": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+        "color_usage": {"enum": ["none", "template"]},
+        "template_reference": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "attribute": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "business": {"type": "boolean"},
+        "key": {"enum": ["PK", "FK", "UK"]},
+        "references": {
+          "type": "object",
+          "required": ["entity", "attribute"],
+          "properties": {
+            "entity": {"type": "string", "minLength": 1},
+            "attribute": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": true
+        },
+        "type": {"type": "string"},
+        "nullable": {"type": "boolean"},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "entity": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "logical_name": {"type": "string"},
+        "attributes": {"type": "array", "items": {"$ref": "#/$defs/attribute"}},
+        "source_requirement": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "relationship": {
+      "type": "object",
+      "required": ["id", "name", "left_entity", "right_entity", "left_to_right", "right_to_left"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "left_entity": {"type": "string", "minLength": 1},
+        "right_entity": {"type": "string", "minLength": 1},
+        "left_to_right": {"$ref": "#/$defs/cardinality"},
+        "right_to_left": {"$ref": "#/$defs/cardinality"},
+        "attributes": {"type": "array", "items": {"$ref": "#/$defs/attribute"}},
+        "resolves_to": {"type": "string", "minLength": 1},
+        "source_requirement": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "cardinality": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": {"enum": [0, 1]},
+        "max": {"enum": [1, "N"]},
+        "meaning": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
   }
 }
