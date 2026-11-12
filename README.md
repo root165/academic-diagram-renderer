@@ -267,3 +267,7 @@ python -m py_compile scripts\validate_ir.py scripts\render.py scripts\inspect_ou
 ## 贡献
 
 欢迎提交图型规则、IR 校验规则、模板或可复现实例。请避免把单个课程模板或某一个渲染器的偶然语法写成普适标准；新增约束应说明其适用图型、模型层次、规范依据和可验证条件。
+<<<<<<< HEAD
+=======
+
+>>>>>>> 08ab14292206705fb54483ac6a83fc091b0a7202
