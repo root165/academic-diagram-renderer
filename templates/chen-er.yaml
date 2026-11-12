@@ -1,0 +1,23 @@
+title: 课程选课概念 ER 图
+purpose: 表达学生与课程之间的选课业务关系
+diagram_type: erd
+semantic_level: conceptual_er
+notation: chen
+source_requirements: [R-01]
+assumptions: []
+tbd: []
+entities:
+  - id: student
+    name: 学生
+    source_requirement: R-01
+  - id: course
+    name: 课程
+    source_requirement: R-01
+relationships:
+  - id: enrollment
+    name: 选修
+    left_entity: student
+    right_entity: course
+    left_to_right: {min: 0, max: N, meaning: 一个学生可选修零到多门课程}
+    right_to_left: {min: 0, max: N, meaning: 一门课程可被零到多名学生选修}
+    source_requirement: R-01

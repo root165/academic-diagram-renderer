@@ -1,0 +1,20 @@
+title: 订单提交流程
+purpose: 表达订单提交的程序控制流
+diagram_type: flowchart
+semantic_level: algorithm
+notation: iso_5807
+source_requirements: [R-11]
+assumptions: []
+tbd: []
+nodes:
+  - {id: start, type: start, label: 开始, source_requirement: R-11}
+  - {id: validate, type: process, label: 校验订单, source_requirement: R-11}
+  - {id: valid, type: decision, label: 订单有效？, source_requirement: R-11}
+  - {id: save, type: process, label: 保存订单, source_requirement: R-11}
+  - {id: end, type: end, label: 结束, source_requirement: R-11}
+edges:
+  - {from: start, to: validate}
+  - {from: validate, to: valid}
+  - {from: valid, to: save, label: 是}
+  - {from: save, to: end}
+  - {from: valid, to: end, label: 否}

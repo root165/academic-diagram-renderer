@@ -1,0 +1,4 @@
+interface:
+  display_name: Academic Diagram Renderer
+  short_description: Render validated academic diagrams and tables
+  default_prompt: Create a traceable, validated diagram or academic table from these report requirements.
